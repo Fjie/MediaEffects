@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\menu\\media_effects.xml",
+        "source": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\src\\main\\res\\menu\\media_effects.xml"
+    }
+]
