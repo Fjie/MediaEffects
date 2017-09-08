@@ -43,7 +43,7 @@ public class MediaEffectsFragment extends Fragment implements GLSurfaceView.Rend
     private static final String STATE_CURRENT_EFFECT = "current_effect";
 
     private GLSurfaceView mEffectView;
-    private int[] mTextures = new int[3];
+    private int[] mTextures = new int[4];
     private EffectContext mEffectContext;
     private Effect mEffect;
     private TextureRenderer mTexRenderer = new TextureRenderer();
@@ -89,22 +89,7 @@ public class MediaEffectsFragment extends Fragment implements GLSurfaceView.Rend
         return true;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(STATE_CURRENT_EFFECT, mCurrentEffect);
-    }
 
-    @Override
-    public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
-        // Nothing to do here
-    }
-
-    @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
-        if (mTexRenderer != null) {
-            mTexRenderer.updateViewSize(width, height);
-        }
-    }
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -123,20 +108,13 @@ public class MediaEffectsFragment extends Fragment implements GLSurfaceView.Rend
         renderResult();
     }
 
-    private void setCurrentEffect(int effect) {
-        mCurrentEffect = effect;
-    }
-
-    /**
-     *
-     */
     private void loadTextures() {
         // Generate textures
         GLES20.glGenTextures(3, mTextures, 0);
 
         // Load input bitmap
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.puppy);
-        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.girl);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.puppy);
         mImageWidth = bitmap.getWidth();
         mImageHeight = bitmap.getHeight();
         mTexRenderer.updateTextureSize(mImageWidth, mImageHeight);
@@ -152,6 +130,29 @@ public class MediaEffectsFragment extends Fragment implements GLSurfaceView.Rend
         GLToolbox.initTexParams();
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(STATE_CURRENT_EFFECT, mCurrentEffect);
+    }
+
+    @Override
+    public void onSurfaceCreated(GL10 gl, EGLConfig eglConfig) {
+        // Nothing to do here
+    }
+
+    @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        if (mTexRenderer != null) {
+            mTexRenderer.updateViewSize(width, height);
+        }
+    }
+
+    private void setCurrentEffect(int effect) {
+        mCurrentEffect = effect;
+    }
+
+
 
     private void initEffect() {
         EffectFactory effectFactory = mEffectContext.getFactory();
@@ -280,15 +281,16 @@ public class MediaEffectsFragment extends Fragment implements GLSurfaceView.Rend
 
     private void applyEffect() {
         mEffect.apply(mTextures[0], mImageWidth, mImageHeight, mTextures[2]);
+        mEffect.apply(mTextures[1], mImageWidth, mImageHeight, mTextures[3]);
     }
 
     private void renderResult() {
         if (mCurrentEffect != R.id.none) {
             // if no effect is chosen, just render the original bitmap
-            mTexRenderer.renderTexture(mTextures[0],mTextures[1]);
+            mTexRenderer.renderTexture(mTextures[2],mTextures[3]);
         } else {
-            // render the result of applyEffect()
             mTexRenderer.renderTexture(mTextures[0],mTextures[1]);
+            // render the result of applyEffect()
         }
     }
 

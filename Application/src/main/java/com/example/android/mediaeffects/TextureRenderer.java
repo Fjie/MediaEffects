@@ -22,6 +22,13 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import static android.opengl.GLES20.GL_BLEND;
+import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
+import static android.opengl.GLES20.GL_ONE_MINUS_SRC_ALPHA;
+import static android.opengl.GLES20.GL_SRC_ALPHA;
+import static android.opengl.GLES20.glBlendFunc;
+import static android.opengl.GLES20.glEnable;
+
 public class TextureRenderer {
 
     private int mProgram;
@@ -62,11 +69,18 @@ public class TextureRenderer {
                     "uniform sampler2D tex_sampler2;\n" +
                     "varying vec2 v_texcoord;\n" +
                     "varying vec2 v_texcoord2;\n" +
+                    "const float partOf1 = 0.5;\n" +
                     "void main() {\n" +
-                    "  vec4 a = texture2D(tex_sampler, v_texcoord + vec2(0.5, 0.0));\n" +
-                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2 + vec2(-0.5, 0.0));\n" +
+//                    "  vec4 a = texture2D(tex_sampler, v_texcoord + vec2(0.5, 0.0));\n" +
+//                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2 + vec2(-0.5, 0.0));\n" +
+                    "  vec4 a = texture2D(tex_sampler, v_texcoord );\n" +
+                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2);\n" +
+//                    "  vec4 a = texture2D(tex_sampler, v_texcoord  * vec2(1.5,1.0));\n" +
+//                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2 * vec2(0.5,1.0));\n" +
+//                    "  vec4 s = a* vec4(1.0, 1.0, 1.0, 1.0) + b * vec4(1.0, 1.0, 1.0, 1.0);\n" +
                     "  vec4 s = a + b;\n" +
-                    "  gl_FragColor = vec4(s.r * 0.299 + s.g*0.587 + s.b*0.114);\n" + //手工加个灰度滤镜
+                    "  gl_FragColor = s;\n" +
+//                    "  gl_FragColor = vec4(s.r * 0.299 + s.g*0.587 + s.b*0.114);\n" + //手工加个灰度滤镜
                     "}\n";
 
     private static final float[] TEX_VERTICES = {
@@ -76,10 +90,10 @@ public class TextureRenderer {
             0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
     };
 //    private static final float[] TEX_VERTICES = {
-//            0.0f, 1.0f, 0.5f, 1.0f, 0.5f, 0.0f, 1.0f, 0.0f
+//            0.0f, 1.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f
 //    };
 //    private static final float[] TEX_VERTICES_2 = {
-//            0.5f, 1.0f, 1.0f, 1.0f, 0.5f, 0.0f, 1.0f, 0.0f
+//            0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, .5f, 0.0f
 //    };
 
     private static final float[] POS_VERTICES = {
@@ -145,6 +159,9 @@ public class TextureRenderer {
         GLES20.glViewport(0, 0, mViewWidth, mViewHeight);
         GLToolbox.checkGlError("glViewport");
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         // Disable blending
 //        GLES20.glDisable(GLES20.GL_BLEND);
 
@@ -177,9 +194,10 @@ public class TextureRenderer {
 
         // Draw
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        GLES20.glClear(GL_COLOR_BUFFER_BIT);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
     }
+    
 
     private void computeOutputVertices() {
         if (mPosVertices != null) {
