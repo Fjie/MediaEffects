@@ -55,10 +55,12 @@ public class TextureRenderer {
             "attribute vec4 a_position;\n" +
                     "attribute vec2 a_texcoord;\n" +
                     "attribute vec2 a_texcoord2;\n" +
+                    "varying vec4 v_position;\n" +//顶点坐标传到像素着色器判断分屏
                     "varying vec2 v_texcoord;\n" +
                     "varying vec2 v_texcoord2;\n" +
                     "void main() {\n" +
                     "  gl_Position = a_position;\n" +
+                    "  v_position = a_position;\n" +
                     "  v_texcoord = a_texcoord;\n" +
                     "  v_texcoord2 = a_texcoord2;\n" +
                     "}\n";
@@ -67,34 +69,25 @@ public class TextureRenderer {
             "precision mediump float;\n" +
                     "uniform sampler2D tex_sampler;\n" +
                     "uniform sampler2D tex_sampler2;\n" +
+                    "varying vec4 v_position;\n" +
                     "varying vec2 v_texcoord;\n" +
                     "varying vec2 v_texcoord2;\n" +
-                    "const float partOf1 = 0.5;\n" +
                     "void main() {\n" +
-//                    "  vec4 a = texture2D(tex_sampler, v_texcoord + vec2(0.5, 0.0));\n" +
-//                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2 + vec2(-0.5, 0.0));\n" +
-                    "  vec4 a = texture2D(tex_sampler, v_texcoord );\n" +
-                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2);\n" +
-//                    "  vec4 a = texture2D(tex_sampler, v_texcoord  * vec2(1.5,1.0));\n" +
-//                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2 * vec2(0.5,1.0));\n" +
-//                    "  vec4 s = a* vec4(1.0, 1.0, 1.0, 1.0) + b * vec4(1.0, 1.0, 1.0, 1.0);\n" +
-                    "  vec4 s = a + b;\n" +
-                    "  gl_FragColor = s;\n" +
-//                    "  gl_FragColor = vec4(s.r * 0.299 + s.g*0.587 + s.b*0.114);\n" + //手工加个灰度滤镜
+                    "  vec4 a = texture2D(tex_sampler, v_texcoord * vec2(2.0, 1.0));\n" +
+                    "  vec4 b = texture2D(tex_sampler2, v_texcoord2 * vec2(2.0, 1.0));\n" +//这里如果用同上的纹理坐标就报错，迷
+                    "  if(v_position.x < 0.0){\n" +//根据顶点判断分屏
+                    "      gl_FragColor = a;\n" +
+                    "  }else{\n" +
+                    "      gl_FragColor = b;\n" +
+                    "  };\n" +
                     "}\n";
 
     private static final float[] TEX_VERTICES = {
             0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
-    };
+    };//纹理范围取满
     private static final float[] TEX_VERTICES_2 = {
             0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
     };
-//    private static final float[] TEX_VERTICES = {
-//            0.0f, 1.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f
-//    };
-//    private static final float[] TEX_VERTICES_2 = {
-//            0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, .5f, 0.0f
-//    };
 
     private static final float[] POS_VERTICES = {
             -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f
@@ -197,7 +190,7 @@ public class TextureRenderer {
         GLES20.glClear(GL_COLOR_BUFFER_BIT);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
     }
-    
+
 
     private void computeOutputVertices() {
         if (mPosVertices != null) {

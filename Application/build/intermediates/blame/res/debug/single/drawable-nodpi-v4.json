@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi-v4\\pic02.jpg",
+        "source": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\src\\main\\res\\drawable-nodpi\\pic02.jpg"
+    },
+    {
         "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi-v4\\girl.jpg",
         "source": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\src\\main\\res\\drawable-nodpi\\girl.jpg"
     },

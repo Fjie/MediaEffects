@@ -28,12 +28,12 @@
         "source": "C:\\Users\\admin\\.android\\build-cache\\572708a490fe0394e0eb62af1262bc0175d6f4d8\\output\\res\\layout\\abc_list_menu_item_icon.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\admin\\.android\\build-cache\\572708a490fe0394e0eb62af1262bc0175d6f4d8\\output\\res\\layout\\notification_template_custom_big.xml"
-    },
-    {
         "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
         "source": "C:\\Users\\admin\\.android\\build-cache\\572708a490fe0394e0eb62af1262bc0175d6f4d8\\output\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\admin\\.android\\build-cache\\572708a490fe0394e0eb62af1262bc0175d6f4d8\\output\\res\\layout\\notification_template_custom_big.xml"
     },
     {
         "merged": "C:\\Users\\admin\\Android\\AndroidStudioProjects\\MediaEffects\\Application\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",

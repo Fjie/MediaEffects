@@ -113,8 +113,8 @@ public class MediaEffectsFragment extends Fragment implements GLSurfaceView.Rend
         GLES20.glGenTextures(3, mTextures, 0);
 
         // Load input bitmap
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.girl);
-        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.puppy);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pic01);
+        Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.pic02);
         mImageWidth = bitmap.getWidth();
         mImageHeight = bitmap.getHeight();
         mTexRenderer.updateTextureSize(mImageWidth, mImageHeight);
